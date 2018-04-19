@@ -1,17 +1,4 @@
-#include <cstdlib>
-#include <iostream>
-#include <cmath>
-#include <vector>
-
-#define BACKWARD_EULER 0;
-#define FORWARD_EULER 1;
-#define TRAPEZOIDAL_EULER 2;
-#define HEUN_ONE_STEP 2;
-#define HEUN_ITR 3;
-#define RK34 4;
-#define ADAPTIVE_RK34 5;
-
-using namespace std;
+#include "function_pointer.hpp"
 
 void exponential_function( vector<double>* result , vector<double>* input , double time ){
 	(*result).push_back ( 4.0*exp( 0.8* time ) - 0.5*(*input).back() );
@@ -42,7 +29,7 @@ void forward_euler( void (*function)(vector<double>* , vector<double>* , double)
 	return;
 }
 
-int main(int argc, char const *argv[])
+int RUN_function_pointer()
 {
 	cout << fixed;
 
