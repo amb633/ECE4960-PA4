@@ -27,6 +27,8 @@ void shiftVector( double scalar, vector<double>* a,  vector<double>* result);
 
 void expVector( vector<double>* result, vector<double>* input);
 
+void vectorMultiplication( vector<double>* a , vector<double>* b, vector<double>* result );
+
 void vectorProduct( vector<double>* result , vector<vector<double>>* matrix , vector<double>* input );
 
 void print_full_vec( vector<double>* VF );

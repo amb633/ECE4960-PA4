@@ -55,6 +55,16 @@ void expVector( vector<double>* result, vector<double>* input){
     }
 }
 
+void vectorMultiplication( vector<double>* a , vector<double>* b, vector<double>* result ){
+    if ( (*a).size() != (*b).size() ){
+        cout << "ERROR: matrix dimensions do not match!";
+        return;
+    }
+    for ( int i = 0 ; i < (*a).size() ; i++ ){
+        result->push_back(((*a)[i])*((*b)[i]));
+    }
+}
+
 void vectorProduct( vector<double>* result , vector<vector<double>>* matrix , vector<double>* input ){
     
     if ( (*input).size() != (*matrix).size() ){

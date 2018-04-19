@@ -15,9 +15,11 @@
 
 using namespace std;
 
-bool TEST_add_vectors( vector<double>* x,  vector<double>* y,  vector<double>* sum, vector<double>* expected_result );
+bool TEST_add_vectors( vector<double>* x,  vector<double>* y, vector<double>* expected_result );
 
-bool TEST_scaleVector( double scalar, vector<double>* a,  vector<double>* result, vector<double>* expected_result);
+bool TEST_scaleVector( double scalar, vector<double>* a, vector<double>* expected_result);
+
+bool TEST_vectorMultiplication( vector<double>* x,  vector<double>* y, vector<double>* expected_result );
 
 void TEST();
 
