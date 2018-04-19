@@ -56,7 +56,6 @@ int RUN_function_pointer()
 		slope.erase( slope.begin() , slope.end() );
 		values.erase( values.begin() , values.end() );
 		forward_euler( exp_fcn , &slope , &values , time , march );
-		values.push_back( (slope.back() * march) + values.back() );
 		time += march;
 	}
 
