@@ -55,6 +55,23 @@ void expVector( vector<double>* result, vector<double>* input){
     }
 }
 
+void vectorProduct( vector<double>* result , vector<vector<double>>* matrix , vector<double>* input ){
+    
+    if ( (*input).size() != (*matrix).size() ){
+        cout << "ERROR: matrix dimensions do not match!";
+        return;
+    }
+    int rank = (*input).size();
+    for ( int i = 0 ; i < rank ; i++ ){
+        (*result).push_back(0.0);
+    }
+    for ( int i = 0 ; i < rank ; i++ ){
+        for ( int j = 0 ; j < rank ; j++ ){
+            (*result)[i] += (((*matrix)[i][j])*((*input)[j]));
+        }
+    }
+}
+
 /* print the full vector VF given by a pointer */
 /* from programming assignment 2 */
 void print_full_vec( vector<double>* VF ){

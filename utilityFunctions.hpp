@@ -12,7 +12,9 @@
 #include <stdio.h>
 #include <iostream>
 #include <vector>
+
 #include <math.h>
+#include <cstdlib>
 
 using namespace std;
 
@@ -22,7 +24,10 @@ void scaleVector( double scalar, vector<double>* a,  vector<double>* result);
 
 void shiftVector( double scalar, vector<double>* a,  vector<double>* result);
 
+
 void expVector( vector<double>* result, vector<double>* input);
+
+void vectorProduct( vector<double>* result , vector<vector<double>>* matrix , vector<double>* input );
 
 void print_full_vec( vector<double>* VF );
 
