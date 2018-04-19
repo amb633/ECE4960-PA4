@@ -1,4 +1,5 @@
 #include "function_pointer.hpp"
+#include "utilityFunctions.hpp"
 
 void exponential_function( vector<double>* result , vector<double>* input , double time ){
 	(*result).push_back ( 4.0*exp( 0.8* time ) - 0.5*(*input).back() );
@@ -28,6 +29,37 @@ void forward_euler( void (*function)(vector<double>* , vector<double>* , double)
 	function( slope , values , time );
 	return;
 }
+
+//void RK34_k1( void (*function)(vector<double>* , vector<double>* , double), vector<double>* k1, vector<double>* x_prev, double t, vector<double>* h){
+//    function( k1, x_prev , t );
+//}
+//
+//double RK34_k2( void (*function)(vector<double>* , vector<double>* , double), vector<double>* k2, vector<double>* x_prev, double t, vector<double>* h, vector<double>* k1){
+//    vector<double> k1_h, k1_h_2, h_2, x_prev_k2, t_k2;
+//    add_vectors(k1, h, &k1_h);
+//    scaleVector(0.5, &k1_h, &k1_h_2);
+//    scaleVector(0.5, h, &h_2);
+//    shiftVector(t, &h_2, &t_k2);
+//    add_vectors(x_prev, &k1_h_2, &x_prev_k2);
+//    function(k2, &x_prev_k2, &t_k2);
+//    return h62_dx_dt(x_prev + (k1*h/2.0), t + (h/2.0));
+//}
+//
+//double RK34_k3(double x_prev, double t, double h, double k2){
+//    return h62_dx_dt(x_prev + (3.0*k2*h/4.0), t + (3.0*h/4.0));
+//}
+//
+//double RK34_k4(double x_prev, double t, double h, double k3){
+//    return h62_dx_dt(x_prev + k3*h, t + h);
+//}
+//
+//double RK34(double x_prev, double k1, double k2, double k3, double k4, double h){
+//    return x_prev + ((1.0/24.0)*((7.0*k1) + (6.0*k2) + (8.0*k3) + (3.0*k4))*h);
+//}
+//
+//double RK34_error(double k1, double k2, double k3, double k4, double h){
+//    return ((1/72.0)*(-5.0*k1 + 6.0*k2 + 8.0*k3 -9*k4)*h);
+//}
 
 int RUN_function_pointer()
 {

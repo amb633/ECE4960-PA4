@@ -12,9 +12,9 @@
 #include "function_pointer.hpp"
 
 int main(int argc, const char * argv[]) {
-    // insert code here...
     
     TEST();
+    
     RUN_function_pointer();
     
 }

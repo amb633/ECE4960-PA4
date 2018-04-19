@@ -26,6 +26,12 @@ void scaleVector( double scalar, vector<double>* a,  vector<double>* result){
     }
 }
 
+void shiftVector( double scalar, vector<double>* a,  vector<double>* result){
+    for( int i = 0; i<(*a).size(); i++){
+        (*result).push_back((*a)[i] + scalar);
+    }
+}
+
 /* print the full vector VF given by a pointer */
 void print_full_vec( vector<double>* VF ){
     for ( int i = 0 ; i < (*VF).size() ; i++ ){

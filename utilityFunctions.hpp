@@ -19,6 +19,8 @@ void add_vectors( vector<double>* x,  vector<double>* dx,  vector<double>* sum )
 
 void scaleVector( double scalar, vector<double>* a,  vector<double>* result);
 
+void shiftVector( double scalar, vector<double>* a,  vector<double>* result);
+
 void print_full_vec( vector<double>* VF );
 
 #endif /* utilityFunctions_hpp */
