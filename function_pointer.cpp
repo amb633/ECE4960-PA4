@@ -18,6 +18,25 @@ void exponential_function( vector<double>* result , vector<double>* input , doub
 	return;
 }
 
+void generate_current_input( vector<double>* current_input , double march ){
+	
+	double gradient = 0.1e-3/1.0e-9;
+	for ( int i = 0 ; i < 100/20 ; i++ ){
+		for ( double time = 0.0 ; time < 1e-9 ; time += march ){
+			(*current_input).push_back( gradient*time );
+		}
+		for ( double time = 1e-9 ; time < 10e-9 ; time += march ){
+			(*current_input).push_back( 0.1e-3 );
+		}
+		for ( double time = 0.0 ; time < 1e-9 ; time += march ){
+			(*current_input).push_back( -gradient*time );
+		}
+		for ( double time = 1e-9 ; time < 10e-9 ; time += march ){
+			(*current_input).push_back( 0.0 );
+		}
+	}
+}
+
 void forward_euler( void (*function)(vector<double>* , vector<double>* , double) , vector<double>* slope , vector<double>* values, double time , double march ){
 	function( slope , values , time );
 	return;
@@ -47,11 +66,20 @@ int main(int argc, char const *argv[])
 		cout << trueValues[i] << "	";
 		cout << values.back();
 		cout << endl;
+		slope.erase( slope.begin() , slope.end() );
+		values.erase( values.begin() , values.end() );
 		forward_euler( exp_fcn , &slope , &values , time , march );
 		values.push_back( (slope.back() * march) + values.back() );
 		time += march;
 	}
-	
 
+
+	cout << endl;
+	vector<double> current_input;
+	generate_current_input( &current_input , 0.2e-9 );
+	// for ( int i = 0 ; i < current_input.size() ; i ++ ){
+	// 	cout << current_input[i] << endl;
+	// }
+	// cout << current_input.size() << endl;
 	return 0;
 }
