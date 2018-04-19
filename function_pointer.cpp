@@ -1,9 +1,31 @@
 #include "function_pointer.hpp"
-#include "utilityFunctions.hpp"
 
-void exponential_function( vector<double>* result , vector<double>* input , double time ){
-	(*result).push_back ( 4.0*exp( 0.8* time ) - 0.5*(*input).back() );
-	return;
+void true_function( vector<double>* result, vector<double>* time ){
+    
+    result->erase(result->begin(), result->end());
+    for ( int i = 0; i < time->size(); i++ ){
+        double t = (*time)[i];
+        result->push_back((((4/1.3)*(exp(0.8*t) - exp(-0.5*t))) + 2*exp(-0.5*t)));
+    }
+}
+
+void exponential_function( vector<double>* phi , vector<double>* x_i0, vector<double>* time,  vector<double>* h){
+    if( x_i0->size() != time->size() || x_i0->size() != h->size() || time->size() != h->size()){
+        cout << "ERROR: vectors are not the same dimension to calculate task 3 " << endl;
+    } else {
+        for( int i = 0; i < x_i0->size(); i ++){
+            double t = (*time)[i];
+            double x_prev = (*x_i0)[i];
+            (*phi).push_back ( 4.0*exp( 0.8* t ) - 0.5*x_prev);
+            //    vector<double> time08, exptime08, exptime08_scale4, x_i0_scale05;
+            //    scaleVector(0.8, time, &time08);
+            //    expVector(&exptime08, &time08);
+            //    scaleVector(4.0, &exptime08, &exptime08_scale4);
+            //    scaleVector(-0.5, x_i0, &x_i0_scale05);
+            //    add_vectors(&exptime08_scale4, &x_i0_scale05, phi);
+        }
+    }
+    return;
 }
 
 void generate_current_input( vector<double>* current_input , double march ){
@@ -25,8 +47,8 @@ void generate_current_input( vector<double>* current_input , double march ){
 	}
 }
 
-void forward_euler( void (*function)(vector<double>* , vector<double>* , double) , vector<double>* slope , vector<double>* values, double time , double march ){
-	function( slope , values , time );
+void forward_euler( void (*function)(vector<double>* , vector<double>* , vector<double>*, vector<double>*) , vector<double>* slope , vector<double>* values, vector<double>* time , vector<double>* march ){
+	function( slope, values, time, march );
 	return;
 }
 
@@ -65,31 +87,48 @@ int RUN_function_pointer()
 {
 	cout << fixed;
 
-	void (*exp_fcn)(vector<double>* , vector<double>* , double ) = exponential_function;
-	double trueValues[] = {2.0 , 6.1946 , 14.843 , 33.677 , 75.339 };
+	void (*exp_fcn)(vector<double>* , vector<double>* , vector<double>*, vector<double>* ) = exponential_function;
+    vector<double> trueValues;
 
 	vector<double> slope , values;
-	double time , march;
+//    double time , march;
 	int n_steps , counter;
 
-	time = 0.0;
-	march = 1.0;
-	values.push_back(2.0);
+    vector<double> time, march, initial;
+    double rank = 1;
+    time = {0};
+    march = {1};
+    initial = {2.0};
 	n_steps = 5;
 
 	cout << "time:		actual:		forward_euler:" << endl;
 	cout << "--------	--------	--------------" << endl;
 
 	for ( int i = 0 ; i < n_steps ; i++ ){
-		cout << time << "	";
-		cout << trueValues[i] << "	";
-		cout << values.back();
-		cout << endl;
-		//slope.erase( slope.begin() , slope.end() );
-		//values.erase( values.begin() , values.end() );
-		forward_euler( exp_fcn , &slope , &values , time , march );
-		values.push_back( slope.back() * march  + values.back() );
-		time += march;
+        print_full_vec(&time);
+        vector<double> ground_truth;
+        true_function(&ground_truth, &time);
+        print_full_vec(&ground_truth);
+        
+        vector<double> new_values;
+        
+        if( i < 1){
+            new_values = initial;
+        } else {
+            vector<double> march_neg;
+            scaleVector(-1.0, &march, &march_neg);
+            vector<double> time_prev;
+            add_vectors(&time, &march_neg, &time_prev);
+            forward_euler( exp_fcn , &slope , &values , &time_prev , &march );
+            add_vectors(&values, &slope, &new_values);
+        }
+        print_full_vec(&new_values);
+        values = new_values;
+        slope.erase(slope.begin(), slope.end());
+        vector<double> new_time;
+        add_vectors(&time, &march, &new_time);
+        time = new_time;
+        cout << endl;
 	}
 
 

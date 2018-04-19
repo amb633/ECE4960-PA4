@@ -14,6 +14,7 @@
 #include <iostream>
 #include <cmath>
 #include <vector>
+#include "utilityFunctions.hpp"
 
 #define BACKWARD_EULER 0;
 #define FORWARD_EULER 1;

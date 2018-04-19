@@ -12,6 +12,7 @@
 #include <stdio.h>
 #include <iostream>
 #include <vector>
+#include <math.h>
 
 using namespace std;
 
@@ -20,6 +21,8 @@ void add_vectors( vector<double>* x,  vector<double>* dx,  vector<double>* sum )
 void scaleVector( double scalar, vector<double>* a,  vector<double>* result);
 
 void shiftVector( double scalar, vector<double>* a,  vector<double>* result);
+
+void expVector( vector<double>* result, vector<double>* input);
 
 void print_full_vec( vector<double>* VF );
 
