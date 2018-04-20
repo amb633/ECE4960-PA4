@@ -10,11 +10,17 @@
 #include "utilityFunctions.hpp"
 #include "test_utilityFunctions.hpp"
 #include "function_pointer.hpp"
+#include "simpleRC.hpp"
 
 int main(int argc, const char * argv[]) {
+
+	//cout << fixed;
     
     TEST();
     
+    if ( test_current_generator() )
+    	cout << " current generator is working " << endl << endl;
+    else cout << " current generator is not working " << endl << endl;
+
     RUN_function_pointer();
-    
 }

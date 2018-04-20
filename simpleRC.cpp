@@ -28,7 +28,8 @@ void simple_RC_circuit( vector<double>* phi , vector<double>* values , vector<do
 
 double generate_current_input( double time ){
 	
-	double gradient = 0.1e-3/1.0e-9;
+	double gradient = (0.1e-3)/(1.0e-9);
+	//cout << gradient << endl;
 
 	if ( time >= 1.0e-9 && time <= 10e-9 ||
 		time >= 21e-9 && time <= 30e-9 ||
@@ -49,35 +50,35 @@ double generate_current_input( double time ){
 		return ( gradient * time );
 
 	else if ( time > 10e-9 && time < 11e-9 )
-		return( -gradient * (time - 10e-9) );
+		return(  0.1e-3 - (gradient * (time - 10e-9)));
 
 	// period two
 	else if ( time > 20e-9 && time < 21e-9 )
 		return ( gradient * (time - 20e-9) );
 
 	else if ( time > 30e-9 && time < 31e-9 )
-		return( -gradient * (time - 30e-9) );
+		return(  0.1e-3 - (gradient * (time - 30e-9)));
 
 	// period three
 	else if ( time > 40e-9 && time < 41e-9 )
 		return ( gradient * (time - 40e-9) );
 
 	else if ( time > 50e-9 && time < 51e-9 )
-		return( -gradient * (time - 50e-9) );
+		return(  0.1e-3 - (gradient * (time - 50e-9)));
 
 	// period four
 	else if ( time > 60e-9 && time < 61e-9 )
 		return ( gradient * (time - 60e-9) );
 
 	else if ( time > 70e-9 && time < 71e-9 )
-		return( -gradient * (time - 70e-9) );
+		return(  0.1e-3 - (gradient * (time - 70e-9)));
 
 	// period five
 	else if ( time > 80e-9 && time < 81e-9 )
 		return ( gradient * (time - 80e-9) );
 
 	else if ( time > 90e-9 && time < 91e-9 )
-		return( -gradient * (time - 90e-9) );
+		return(  0.1e-3 - (gradient * (time - 90e-9)));
 
 	// error return
 	else return ( -1.0 );
@@ -102,18 +103,18 @@ bool test_current_generator( ){
 		|| generate_current_input( 94.6e-9 ) != 0.0e-3)
 		flag = false;
 
-	if ( generate_current_input( 0.5e-9 ) != 0.05e-3 
-		|| generate_current_input( 20.5e-9 ) != 0.05e-3 
-		|| generate_current_input( 40.5e-9 ) != 0.05e-3
-		|| generate_current_input( 60.5e-9 ) != 0.05e-3
-		|| generate_current_input( 80.5e-9 ) != 0.05e-3)
-		flag = false;	
+	if ( abs( generate_current_input( 0.5e-9 ) - 0.05e-3 ) > 1e-12 
+		|| abs( generate_current_input( 20.5e-9 )  - 0.05e-3 ) > 1e-12 
+		|| abs( generate_current_input( 40.5e-9 ) - 0.05e-3 ) > 1e-12 
+		|| abs( generate_current_input( 60.5e-9 ) - 0.05e-3 ) > 1e-12 
+		|| abs( generate_current_input( 80.5e-9 ) - 0.05e-3 ) > 1e-12 )
+		flag = false;
 
-	if ( generate_current_input( 10.5e-9 ) != 0.05e-3 
-		|| generate_current_input( 30.5e-9 ) != 0.05e-3 
-		|| generate_current_input( 50.5e-9 ) != 0.05e-3
-		|| generate_current_input( 70.5e-9 ) != 0.05e-3
-		|| generate_current_input( 90.5e-9 ) != 0.05e-3)
+	if ( abs( generate_current_input( 10.5e-9 )  - 0.05e-3 ) > 1e-12 
+		|| abs( generate_current_input( 30.5e-9 ) - 0.05e-3 ) > 1e-12 
+		|| abs( generate_current_input( 50.5e-9 ) - 0.05e-3 ) > 1e-12 
+		|| abs( generate_current_input( 70.5e-9 ) - 0.05e-3 ) > 1e-12 
+		|| abs( generate_current_input( 90.5e-9 ) - 0.05e-3 ) > 1e-12 )
 		flag = false;	
 
 	return flag;

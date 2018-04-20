@@ -134,7 +134,7 @@ int RUN_function_pointer()
             vector<double> time_prev;
             add_vectors(&time, &march_neg, &time_prev);
             vector<double> k1, k2, k3, k4;
-            forward_euler( simpleCircuit , &slope , &values , &time_prev , &march );
+            //forward_euler( simpleCircuit , &slope , &values , &time_prev , &march );
 //            RK34_function(exp_fcn, &slope, &values, &time_prev, &march, &k1, &k2, &k3, &k4);
             add_vectors(&values, &slope, &new_values);
             print_full_vec(&new_values);
