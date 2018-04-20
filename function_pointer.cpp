@@ -1,4 +1,5 @@
 #include "function_pointer.hpp"
+#include "simpleRC.hpp"
 
 void true_function( vector<double>* result, vector<double>* time ){
     
@@ -102,6 +103,7 @@ int RUN_function_pointer()
 	cout << fixed;
 
 	void (*exp_fcn)(vector<double>* , vector<double>* , vector<double>*, vector<double>* ) = exponential_function;
+	void (*simpleCircuit)( vector<double>* , vector<double>* , vector<double>* , vector<double>* ) = simple_RC_circuit;
     vector<double> trueValues;
 
 	vector<double> slope , values;
@@ -132,8 +134,8 @@ int RUN_function_pointer()
             vector<double> time_prev;
             add_vectors(&time, &march_neg, &time_prev);
             vector<double> k1, k2, k3, k4;
-//            forward_euler( exp_fcn , &slope , &values , &time_prev , &march );
-            RK34_function(exp_fcn, &slope, &values, &time_prev, &march, &k1, &k2, &k3, &k4);
+            forward_euler( simpleCircuit , &slope , &values , &time_prev , &march );
+//            RK34_function(exp_fcn, &slope, &values, &time_prev, &march, &k1, &k2, &k3, &k4);
             add_vectors(&values, &slope, &new_values);
             print_full_vec(&new_values);
 //            print_full_vec(&k1);
