@@ -22,5 +22,9 @@ int main(int argc, const char * argv[]) {
     	cout << " current generator is working " << endl << endl;
     else cout << " current generator is not working " << endl << endl;
 
+    if ( test_simple_RC_circuit() )
+    	cout << " simple RC circuit function is working " << endl << endl;
+    else cout << " simple RC circuit function is not working " << endl << endl;
+
     RUN_function_pointer();
 }

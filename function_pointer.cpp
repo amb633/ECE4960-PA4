@@ -113,10 +113,11 @@ int RUN_function_pointer()
     time = {0};
     march = {1};
     initial = {2.0};
+    //initial = {0.0 , 0.0};
 	n_steps = 5;
 
-	cout << "time:		actual:		forward_euler:" << endl;
-	cout << "--------	--------	--------------" << endl;
+	cout << "time:	    actual:	    forward_euler:" << endl;
+	cout << "-------------------------------------" << endl;
 
 	for ( int i = 0 ; i < n_steps ; i++ ){
         print_full_vec(&time);
@@ -134,7 +135,7 @@ int RUN_function_pointer()
             vector<double> time_prev;
             add_vectors(&time, &march_neg, &time_prev);
             vector<double> k1, k2, k3, k4;
-            //forward_euler( simpleCircuit , &slope , &values , &time_prev , &march );
+            //forward_euler( exp_fcn , &slope , &values , &time_prev , &march );
 //            RK34_function(exp_fcn, &slope, &values, &time_prev, &march, &k1, &k2, &k3, &k4);
             add_vectors(&values, &slope, &new_values);
             print_full_vec(&new_values);

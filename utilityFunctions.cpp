@@ -68,7 +68,7 @@ void vectorMultiplication( vector<double>* a , vector<double>* b, vector<double>
 void vectorProduct( vector<double>* result , vector<vector<double>>* matrix , vector<double>* input ){
     
     if ( (*input).size() != (*matrix).size() ){
-        cout << "ERROR: matrix dimensions do not match!";
+        cout << "ERROR: matrix dimensions do not match for vector product!";
         return;
     }
     int rank = (*input).size();

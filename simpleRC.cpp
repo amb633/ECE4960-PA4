@@ -15,12 +15,15 @@ void simple_RC_circuit( vector<double>* phi , vector<double>* values , vector<do
 	cp22 = -( (1.0/(C2*R2)) + (1.0/(C2*R3)) );
 
 	vector<vector<double>> circuit_param = { {cp11 , cp12 } , {cp21 , cp22} };
-
 	vector<double> temp;
 	vectorProduct( &temp , &circuit_param , values );
-
+	// cout << endl << endl << endl;
+	// cout << " temp variable : " << endl;
+	// print_full_vec( &temp );
+	// cout << endl << endl << endl;
 	double current_term = ( generate_current_input( (*time).back() )) / C1;
 	// double current_term = ( generate_current_input ( (*time).back() + (*march).back() )) / C1;
+	// cout << "current_term : " << current_term << endl;
 	(*phi).push_back( temp[0] + current_term );
 	(*phi).push_back( temp[1] + 0.0 );
 
@@ -118,4 +121,35 @@ bool test_current_generator( ){
 		flag = false;	
 
 	return flag;
+}
+
+bool test_simple_RC_circuit() {
+	bool flag = true;
+
+	vector<double> test_1 , values_1 , time_1 , march_1 ;
+	values_1 = { 1.0 , 1.0 };
+	time_1 = { 20.5e-9 };
+	march_1 = { 1e-9 };
+	simple_RC_circuit( &test_1 , &values_1 , &time_1 , &march_1 );
+	cout.precision(15);
+	double tolerance = 1.0e-5;
+	if ( abs( test_1[0] - ( -50.0e6 ) ) > tolerance
+		|| abs( test_1[1] - ( -100.0e6 ) ) > tolerance ){
+		flag = false;
+		//print_full_vec( &test_1 );
+	}
+
+	vector<double> test_2 , values_2 , time_2 , march_2 ;
+	values_2 = { 2.0 , 4.0 };
+	time_2 = { 67.3e-9 };
+	march_2 = { 1e-9 };
+	simple_RC_circuit( &test_2 , &values_2 , &time_2 , &march_2 );
+	if ( abs( test_2[0] - ( 100.0e6 ) ) > tolerance
+		|| abs( test_2[1] - ( -600.0e6 ) ) > tolerance ){
+		flag = false;
+		print_full_vec( &test_2 );
+	}
+
+	return flag;
+
 }
