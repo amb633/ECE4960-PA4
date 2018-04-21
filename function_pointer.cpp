@@ -77,8 +77,7 @@ void RK34_function(void (*function)(vector<double>* , vector<double>*, double, d
     add_vectors(&k1_7, &k2_6, &k1_k2);
     add_vectors(&k3_8, &k4_3, &k3_k4);
     add_vectors(&k1_k2, &k3_k4, &sum_K);
-    scaleVector(h, &sum_K, &sum_K_h);
-    scaleVector((1.0/24.0), &sum_K_h, rk34);
+    scaleVector((1.0/24.0), &sum_K, rk34);
 //    add_vectors(&sum_K_h_scaled, x_prev, rk34);
 }
 

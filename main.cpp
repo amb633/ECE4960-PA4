@@ -102,7 +102,7 @@ int main(int argc, const char * argv[]) {
     march = 1e-9;
     //    initial = {2.0};
     initial = {0.0 , 0.0};
-    n_steps = 5;
+    n_steps = 500;
 
     cout << "time1:     RK34 Method->    V1:        V2:     " << endl;
     cout << "-------------------------------------------------------------------------" << endl;
@@ -129,12 +129,16 @@ int main(int argc, const char * argv[]) {
 //            print_full_vec(&slope);
             cout << "                   ";
             print_full_vec(&new_values);
-//            print_full_vec(&k1);
-//            print_full_vec(&k2);
-//            print_full_vec(&k3);
-//            print_full_vec(&k4);
+            cout << endl << "This is the results for k in this iteration: " << endl;
+            print_full_vec(&k1); cout << endl;
+            print_full_vec(&k2); cout << endl;
+            print_full_vec(&k3); cout << endl;
+            print_full_vec(&k4); cout << endl;
+//            vector<double> Err;
+//            E_RK34_function(&Err, march, &k1, &k2, &k3, &k4);
+//            double h_i_1 = new_h_RK34(march, &new_values, &Err, 1e-7);
+//            march = h_i_1;
         }
-
         values = new_values;
         slope.erase(slope.begin(), slope.end());
         double new_time = time + march;
