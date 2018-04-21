@@ -126,11 +126,12 @@ bool test_current_generator( ){
 bool test_simple_RC_circuit() {
 	bool flag = true;
 	double march = 1e-9;
-	vector<double> test_1 , values_1 
+    vector<double> test_1 , values_1 ;
 	double time_1 = 20.5e-9 ;
 	values_1 = { 1.0 , 1.0 };
 	simple_RC_circuit( &test_1 , &values_1 , time_1 , march );
 	//cout.precision(15);
+
 	double tolerance = 1.0e-5;
 	if ( abs( test_1[0] - ( -50.0e6 ) ) > tolerance
 		|| abs( test_1[1] - ( -100.0e6 ) ) > tolerance ){

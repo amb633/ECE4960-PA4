@@ -33,4 +33,6 @@ void vectorProduct( vector<double>* result , vector<vector<double>>* matrix , ve
 
 void print_full_vec( vector<double>* VF );
 
+double calculateNorm( vector<double>* v );
+
 #endif /* utilityFunctions_hpp */

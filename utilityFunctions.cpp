@@ -90,3 +90,16 @@ void print_full_vec( vector<double>* VF ){
     }
 //    cout << endl;
 }
+
+/* calculate the norm of the vector v */
+/* modified funciton from programing assignment 2 */
+double calculateNorm( vector<double>* v){
+    // assuming v is a vector to calculate the norm
+    double squareSum = 0.0;
+    for ( int i = 0 ; i < (*v).size() ; i++ ){
+        double temp = (*v)[i];
+        squareSum += temp*temp;
+    }
+    double norm = sqrt( squareSum );
+    return norm;
+}
