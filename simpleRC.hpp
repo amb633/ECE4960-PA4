@@ -2,7 +2,7 @@
 #include "utilityFunctions.hpp"
 
 // utility functions
-void simple_RC_circuit( vector<double>* phi , vector<double>* values , vector<double>* time , vector<double>* march );
+void simple_RC_circuit( vector<double>* phi , vector<double>* values , double time , double march );
 double generate_current_input( double time );
 
 // test functions

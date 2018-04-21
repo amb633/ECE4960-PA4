@@ -2,7 +2,7 @@
 #include "simpleRC.hpp"
 // #include "function_pointer.hpp"
 
-void phi_function( void (*function)(vector<double>* , vector<double>* , vector<double>* , vector<double>*) ,
+void phi_function( void (*function)(vector<double>* , vector<double>* , double , double) ,
 	vector<double>* slope , vector<double>* values , vector<double>* time , vector<double>* march , int method , bool adaptivity ){
 	switch( method ){
 		case FORWARD_EULER : { 
@@ -25,7 +25,7 @@ void phi_function( void (*function)(vector<double>* , vector<double>* , vector<d
 }
 
 void test_phi_function(){
-	void (*simpleCircuit)( vector<double>* , vector<double>* , vector<double>* , vector<double>* ) = simple_RC_circuit;
+	void (*simpleCircuit)( vector<double>* , vector<double>* , double , double ) = simple_RC_circuit;
 	vector<double> time , march , slope , values;
 	phi_function( simpleCircuit , &slope , &values , &time , &march , FORWARD_EULER);
 	phi_function( simpleCircuit , &slope , &values , &time , &march , RK34 );

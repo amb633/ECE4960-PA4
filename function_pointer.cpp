@@ -10,16 +10,20 @@ void true_function( vector<double>* result, vector<double>* time ){
     }
 }
 
-void exponential_function( vector<double>* phi , vector<double>* x_i0, vector<double>* time,  vector<double>* h){
+void exponential_function( vector<double>* phi , vector<double>* x_i0, double time,  double h){
     if( x_i0->size() != time->size() || x_i0->size() != h->size() || time->size() != h->size()){
         cout << "ERROR: vectors are not the same dimension to calculate task 3 " << endl;
     } else {
-        vector<double> time08, exptime08, exptime08_scale4, x_i0_scale05;
-        scaleVector(0.8, time, &time08);
-        expVector(&exptime08, &time08);
-        scaleVector(4.0, &exptime08, &exptime08_scale4);
+
+        // vector<double> time08, exptime08, exptime08_scale4, x_i0_scale05;
+        // scaleVector(0.8, time, &time08);
+        //expVector(&exptime08, &time08);
+        //scaleVector(4.0, &exptime08, &exptime08_scale4);
+        vector<double> x_i0_scale05;
+        double exp_comp = 4.0*exp(0.8*time);
         scaleVector(-0.5, x_i0, &x_i0_scale05);
-        add_vectors(&exptime08_scale4, &x_i0_scale05, phi);
+        shiftVector(exp_comp, &x_i0_scale05, phi);
+        //add_vectors(&exptime08_scale4, &x_i0_scale05, phi);
 //        for( int i = 0; i < x_i0->size(); i ++){
 //            double t = (*time)[i];
 //            double x_prev = (*x_i0)[i];
@@ -102,8 +106,8 @@ int RUN_function_pointer()
 {
 	cout << fixed;
 
-	void (*exp_fcn)(vector<double>* , vector<double>* , vector<double>*, vector<double>* ) = exponential_function;
-	void (*simpleCircuit)( vector<double>* , vector<double>* , vector<double>* , vector<double>* ) = simple_RC_circuit;
+	void (*exp_fcn)(vector<double>* , vector<double>* , double , double ) = exponential_function;
+	void (*simpleCircuit)( vector<double>* , vector<double>* , double , double ) = simple_RC_circuit;
     vector<double> trueValues;
 
 	vector<double> slope , values;
@@ -111,9 +115,9 @@ int RUN_function_pointer()
 
     vector<double> time, march, initial;
     time = {0};
-    march = {1};
-    initial = {2.0};
-    //initial = {0.0 , 0.0};
+    march = {1e-9};
+    //initial = {2.0};
+    initial = {0.0 , 0.0};
 	n_steps = 5;
 
 	cout << "time:	    actual:	    forward_euler:" << endl;
@@ -135,7 +139,7 @@ int RUN_function_pointer()
             vector<double> time_prev;
             add_vectors(&time, &march_neg, &time_prev);
             vector<double> k1, k2, k3, k4;
-            //forward_euler( exp_fcn , &slope , &values , &time_prev , &march );
+            forward_euler( simpleCircuit , &slope , &values , &time_prev , &march );
 //            RK34_function(exp_fcn, &slope, &values, &time_prev, &march, &k1, &k2, &k3, &k4);
             add_vectors(&values, &slope, &new_values);
             print_full_vec(&new_values);
