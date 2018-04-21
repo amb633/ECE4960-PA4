@@ -16,13 +16,8 @@
 #include <vector>
 #include "utilityFunctions.hpp"
 
-#define BACKWARD_EULER 0;
-#define FORWARD_EULER 1;
-#define TRAPEZOIDAL_EULER 2;
-#define HEUN_ONE_STEP 2;
-#define HEUN_ITR 3;
-#define RK34 4;
-#define ADAPTIVE_RK34 5;
+#define FORWARD_EULER 0
+#define RK34 1
 
 using namespace std;
 

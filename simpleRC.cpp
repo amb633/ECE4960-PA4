@@ -141,13 +141,24 @@ bool test_simple_RC_circuit() {
 
 	vector<double> test_2 , values_2 , time_2 , march_2 ;
 	values_2 = { 2.0 , 4.0 };
-	time_2 = { 67.3e-9 };
+	time_2 = { 64.5e-9 };
 	march_2 = { 1e-9 };
 	simple_RC_circuit( &test_2 , &values_2 , &time_2 , &march_2 );
 	if ( abs( test_2[0] - ( 100.0e6 ) ) > tolerance
 		|| abs( test_2[1] - ( -600.0e6 ) ) > tolerance ){
 		flag = false;
 		print_full_vec( &test_2 );
+	}
+
+	vector<double> test_3 , values_3 , time_3 , march_3 ;
+	values_3 = { 3.0 , 5.0 };
+	time_3 = { 76.3e-9 };
+	march_3 = { 1e-9 };
+	simple_RC_circuit( &test_3 , &values_3 , &time_3 , &march_3 );
+	if ( abs( test_3[0] - ( -100.0e6 ) ) > tolerance
+		|| abs( test_3[1] - ( -700.0e6 ) ) > tolerance ){
+		flag = false;
+		print_full_vec( &test_3 );
 	}
 
 	return flag;
