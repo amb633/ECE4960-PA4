@@ -107,38 +107,39 @@ int main(int argc, const char * argv[]) {
     march = 1e-9;
     //    initial = {2.0};
     initial = {0.0 , 0.0};
-    n_steps = 500;
+    double end_time = 100e-9;
 
     cout << "time1:     RK34 Method->    V1:        V2:     " << endl;
     cout << "-------------------------------------------------------------------------" << endl;
 
-    for ( int i = 0 ; i < n_steps ; i++ ){
+    while(time <= end_time){
         cout << time << "   ";
 //        vector<double> ground_truth;
 //        true_function(&ground_truth, &time);
 //        print_full_vec(&ground_truth);
 
         vector<double> new_values;
+        cout << "                   ";
 
-        if( i < 1){
+        if( time == 0.0){
             new_values = initial;
+            print_full_vec(&initial);
         } else {
             double time_prev = time - march;
             vector<double> k1, k2, k3, k4;
-//            forward_euler( simpleCircuit , &slope , &values , time_prev , march );
+            forward_euler( simpleCircuit , &slope , &values , time_prev , march );
             
-            RK34_function(simpleCircuit, &slope, &values, time_prev, march, &k1, &k2, &k3, &k4);
+//            RK34_function(simpleCircuit, &slope, &values, time_prev, march, &k1, &k2, &k3, &k4);
             vector<double> slope_h;
             scaleVector(march, &slope, &slope_h);
             add_vectors(&values, &slope_h, &new_values);
 //            print_full_vec(&slope);
-            cout << "                   ";
             print_full_vec(&new_values);
-            cout << endl << "This is the results for k in this iteration: " << endl;
-            print_full_vec(&k1); cout << endl;
-            print_full_vec(&k2); cout << endl;
-            print_full_vec(&k3); cout << endl;
-            print_full_vec(&k4); cout << endl;
+//            cout << endl << "This is the results for k in this iteration: " << endl;
+//            print_full_vec(&k1); cout << endl;
+//            print_full_vec(&k2); cout << endl;
+//            print_full_vec(&k3); cout << endl;
+//            print_full_vec(&k4); cout << endl;
 //            vector<double> Err;
 //            E_RK34_function(&Err, march, &k1, &k2, &k3, &k4);
 //            double h_i_1 = new_h_RK34(march, &new_values, &Err, 1e-7);
