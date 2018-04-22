@@ -1,7 +1,7 @@
 #include "simpleRC.hpp"
 
 void simple_RC_circuit( vector<double>* phi , vector<double>* values , double time , double march ){
-	// function to generate the instantaneous slope at a given time interval
+	// function to generate the instantaneous slope at a given time step
 	// based on figure 3 in the handout
 
 	// declare given parameters of the circuit

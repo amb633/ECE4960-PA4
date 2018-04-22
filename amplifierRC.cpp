@@ -1,7 +1,7 @@
 #include "amplifierRC.hpp"
 
 void amplifier_circuit( vector<double>* phi , vector<double>* values , double time , double march ){
-	// function to generate the instantaneous slope at the given time interval
+	// function to generate the instantaneous slope at the given time step
 	// based on figure 5a in the handout
 
 	// declare given parameters of the circuit

@@ -9,7 +9,9 @@
 #include "test_utilityFunctions.hpp"
 #include "utilityFunctions.hpp"
 
+// suite of test functions for utility functions
 bool TEST_add_vectors( vector<double>* x,  vector<double>* y, vector<double>* expected_result ){
+	// testing the elementwise addition of vectors x and y
     vector<double> sum;
     add_vectors(x, y, &sum);
     if( sum == *expected_result){
@@ -20,6 +22,7 @@ bool TEST_add_vectors( vector<double>* x,  vector<double>* y, vector<double>* ex
     
 }
 bool TEST_scaleVector( double scalar, vector<double>* a, vector<double>* expected_result){
+	// testing the multiplication of a vector and a scalar
     vector<double> result;
     scaleVector(scalar, a, &result);
     if( result == *expected_result ){
@@ -31,6 +34,7 @@ bool TEST_scaleVector( double scalar, vector<double>* a, vector<double>* expecte
 }
 
 bool TEST_vectorMultiplication( vector<double>* x,  vector<double>* y, vector<double>* expected_result ){
+	// testing the elementwise multiplication of vectors x and y
     vector<double> product;
     vectorMultiplication(x, y, &product);
     if( product == *expected_result){
@@ -42,6 +46,7 @@ bool TEST_vectorMultiplication( vector<double>* x,  vector<double>* y, vector<do
 }
 
 void TEST(){
+	// parent test function to call all the individual test functions
     cout << "Testing the vector add function: " << endl << endl;
     vector<double> a = {1, 1, 1, 1};
     vector<double> b = {2, 2, 2, 2};

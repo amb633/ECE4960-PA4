@@ -34,17 +34,21 @@ void scaleVector( double scalar, vector<double>* a,  vector<double>* result){
     }
 }
 
+/* creates a deep copy of the vector AF in CT */
+/* from programming assignment 3 */
 void copyMatrix ( vector<double>* CF , vector<double>* AF ){
     (*CF) = (*AF);
     return;
 }
 
+/* adds a constant to all th elements in a vector */
 void shiftVector( double scalar, vector<double>* a,  vector<double>* result){
     for( int i = 0; i<(*a).size(); i++){
         (*result).push_back((*a)[i] + scalar);
     }
 }
 
+/* calculates the exponential of each element in a vector */
 void expVector( vector<double>* result, vector<double>* input){
     if( input->size() < 1 ){
         cout << "ERROR: cannot calculate the exponential of an empty vector " << endl;
@@ -55,6 +59,7 @@ void expVector( vector<double>* result, vector<double>* input){
     }
 }
 
+/* elementwise multiplication of two vectors */
 void vectorMultiplication( vector<double>* a , vector<double>* b, vector<double>* result ){
     if ( (*a).size() != (*b).size() ){
         cout << "ERROR: matrix dimensions do not match!";
@@ -65,6 +70,8 @@ void vectorMultiplication( vector<double>* a , vector<double>* b, vector<double>
     }
 }
 
+/* product of a matrix and a vector */
+/* from programming assignment 3 */
 void vectorProduct( vector<double>* result , vector<vector<double>>* matrix , vector<double>* input ){
     
     if ( (*input).size() != (*matrix).size() ){
