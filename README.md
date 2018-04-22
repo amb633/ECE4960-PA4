@@ -31,7 +31,9 @@ All functions have to created/ called with the standarad function signature:
 - `march`: `double` value for sending the time interval (march) value at each iteration 
 
 **`exponential_function()`**: exponential test function as detailed in the hacker practices
+
 **`simple_RC_circuit()`**: differential equations for simple circuit given in Figure 03 of handout
+
 **`amplifier_circuit()`**: differential equatiosn for common source amplifier given in Figure 5a of handout
 
 Other helper functions:
