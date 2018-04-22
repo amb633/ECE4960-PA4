@@ -4,18 +4,18 @@
 This program focuses on building ODE solvers for SPICE-like circuit simulation. Three different one-step solvers (Euler, Standard Runge-Kutta, and Adaptive Runge-Kutta) were built and tested. The main program builds all relevant functions in the C++ language. A succint implementation on MATLAB is included to cross-check that the values obtained are accurate.
 
 ***************************************************************************
-**Usage**
+### Usage
 ***************************************************************************
 The program is simple to use for user's looking to run individual runs to generate results to solve a specific system's ODEs with various ODE Solver methods. To run the program it takes the standard format:
 
 **`./program Argument#1 - Argument#2 - Argument#3`**
 
-- `Argument#1`: Pick the ODE Solver method to use
-    - ForwardEuler, RK34, RK34A
-- `Argument#2`: Pick the system to solve
-    - Exponential, Simple, Amplifier
-- `Argument#3`: Pick the size of the time step
-    - 1, 0.2
+- **Argument#1**: Pick the ODE Solver method to use
+    - `ForwardEuler`, `RK34`, `RK34A`
+- **Argument#2**: Pick the system to solve
+    - `Exponential`, `Simple`, `Amplifier`
+- **Argument#3**: Pick the size of the time step
+    - `1`, `0.2`
 
 ***************************************************************************
 ### Part 0 - Utility Functions
@@ -72,12 +72,12 @@ All functions have to create/ call the these variables:
 - `time`: `double` value for sending the current time step (t)
 - `march`: `double` value for sending the time interval (h) value at each iteration
 
-**'forward_euler()'**: solves for phi at each time step using the forward euler method and the system's ODE given as a pointer.
+**`forward_euler()`**: solves for phi at each time step using the forward euler method and the system's ODE given as a pointer.
 
 The Runge Kutta method functions have to create/ call these additional variables:
-- `k1, k2, k3, k4`: `vector<double>` for calculating the intermediate k values to calculate the `phi` at each time step
+- `k1`, `k2`, `k3`, `k4`: `vector<double>` for calculating the intermediate k values to calculate the `phi` at each time step
 - `adaptivity`: `bool` to decide when to enable adaptive time steps, which calculats the new time step size using the k values, x_i+1, and a relative error of 1e-4
 
-**'RK34_function()'**: solves for phi at each time step using the Runge Kutta 3-4 method and the system's ODE given as a pointer.
+**`RK34_function()`**: solves for phi at each time step using the Runge Kutta 3-4 method and the system's ODE given as a pointer.
 
-**'ODE_Solver()'**: solves x_i+1 for given the current time step, and calculates `phi` using the function pointer which provided based which system is being solved.
+**`ODE_Solver()`**: solves x_i+1 for given the current time step, and calculates `phi` using the function pointer which provided based which system is being solved.
