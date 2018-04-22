@@ -107,6 +107,7 @@ legend('V1 Euler' , 'V2 Euler' , 'V1 RK34' , 'V2 RK34' , 'V1 RK34A' , 'V2 RK34A'
 title( 'Simple Circuit Solution with March = 0.2ns' , 'FontSize' , 14);
 xlabel('Time in seconds' , 'FontSize' , 12 );
 ylabel('Output Voltages' , 'FontSize' , 12 );
+hold off;
 
 %%
 time_FE = FESimp01(:,1);
@@ -121,7 +122,7 @@ time_ARK = RKASimp01(:,1);
 V1_ARK = RKASimp01(:,2);
 V2_ARK = RKASimp01(:,3);
 
-%
+%%
 
 figure(4);
 plot( time_FE , V1_FE , time_FE , V2_FE , 'LineWidth' , 1.5 );
@@ -133,3 +134,6 @@ legend('V1 Euler' , 'V2 Euler' , 'V1 RK34' , 'V2 RK34' , 'V1 RK34A' , 'V2 RK34A'
 title( 'Simple Circuit Solution with March = 1.0ns' , 'FontSize' , 14);
 xlabel('Time in seconds' , 'FontSize' , 12 );
 ylabel('Output Voltages' , 'FontSize' , 12 );
+hold off;
+
+save( 'plotting_variables');
