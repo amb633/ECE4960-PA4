@@ -21,8 +21,12 @@ int main(int argc, const char * argv[]) {
     string first_arg = argv[1];
     string second_arg = argv[3];
     string test_arg = "TEST";
-    string task3_arg = "TASK3";
-    string task4_arg = "TASK4";
+    string exp_arg = "Exponential";
+    string simple_arg = "Simple";
+    string amplifier_arg = "Amplifier";
+    string forward_arg = "ForwardEuler";
+    string RK34_arg = "RK34";
+    string RK34A_arg = "RK34A";
     
     void (*exp_fcn)( vector<double>* , vector<double>* , double , double ) = exponential_function;
     void (*simpleCircuit)( vector<double>* , vector<double>* , double , double) = simple_RC_circuit;
@@ -48,7 +52,7 @@ int main(int argc, const char * argv[]) {
 
         cout << endl << endl;
         
-    } else if( first_arg == task3_arg){
+    } else if( second_arg == exp_arg){
 
     //
     // PA 4 Tasks 3
@@ -65,27 +69,26 @@ int main(int argc, const char * argv[]) {
         double end_time = 4;
         values = initial;
         
-        if( second_arg == "RK34" ){ cout << "time:      actual:      RK34:  " << endl; };
-        if( second_arg == "Forward" ){ cout << "time:      actual:      Forward:  " << endl; };
+        if( first_arg == RK34_arg ){ cout << "time:      actual:      RK34:  " << endl; };
+        if( first_arg == RK34A_arg ){ cout << "time:      actual:      RK34 Adaptation:  " << endl; };
+        if( first_arg == forward_arg ){ cout << "time:      actual:      Forward:  " << endl; };
         cout << "---------------------------------------------------------------------------" << endl;
         
         while(time <= end_time){
             cout << time << "   ";
             double ground_truth = true_function(time);
             cout << ground_truth << "   ";
-            if( second_arg == "RK34" ){
-                if( (string)argv[4] == "Adaptation" ){
-                    ODE_Solver( exp_fcn , &slope , &values , time , march , RK34, true);
-                } else {
-                    ODE_Solver( exp_fcn , &slope , &values , time , march , RK34);
-                }
+            if( first_arg == RK34A_arg ){
+                ODE_Solver( exp_fcn , &slope , &values , time , march , RK34, true);
+            } else if( first_arg == RK34_arg ){
+                ODE_Solver( exp_fcn , &slope , &values , time , march , RK34);
             } else {
                 //Forward Euler is default
                 ODE_Solver( exp_fcn , &slope , &values , time , march , FORWARD_EULER);
             }
         }
         cout << endl;
-    } else if( first_arg == task4_arg ){
+    } else if( (second_arg == simple_arg) || (second_arg == amplifier_arg) ){
     
         //
         // PA 4 Task 4
@@ -107,40 +110,37 @@ int main(int argc, const char * argv[]) {
         values = initial;
         double end_time = 100e-9;
 
-        if( second_arg == "RK34" ){
-            if((string)argv[4] == "Adaptation"){
-                cout << "RK34 Adaptation Method: " << endl;
+        if( first_arg == RK34A_arg ){
+            cout << "RK34 Adaptation Method: " << endl;
                 
-            } else{
-                cout << "RK34 Method: " << endl;
-            }
+        } else if (first_arg == RK34_arg){
+            cout << "RK34 Method: " << endl;
+        }else if ( first_arg == forward_arg ){
+            cout << "Forward Euler Method: " << endl;
+            
         };
-        if( second_arg == "Forward" ){ cout << "Forward Euler Method: " << endl; };
         cout << "time:     V1:        V2:     " << endl;
         cout << "--------------------------------------" << endl;
 
         while(time <= end_time){
             cout << time << "   ";
             
-            if( second_arg == "RK34" ){
-                if( (string)argv[4] == "Adaptation"){
-                    if( (string)argv[6] == "Amplifier"){
-                        ODE_Solver( amplifierCircuit , &slope , &values , time , march , RK34, true);
-                    } else {
-                        // Simple Circuit is default for RK34 with adaption
-                        ODE_Solver( simpleCircuit , &slope , &values , time , march , RK34, true);
-                    }
+            if( first_arg == RK34A_arg ){
+                if( second_arg == amplifier_arg){
+                    ODE_Solver( amplifierCircuit , &slope , &values , time , march , RK34, true);
                 } else {
-                    //RK34 without adaption is the default
-                    if( (string)argv[5] == "Amplifier"){
-                        ODE_Solver( amplifierCircuit , &slope , &values , time , march , RK34);
-                    } else {
-                        //Simple Circuit is default fr RK34 without adaption
-                        ODE_Solver( simpleCircuit , &slope , &values , time , march , RK34);
-                    }
+                    // Simple Circuit is default for RK34 with adaption
+                    ODE_Solver( simpleCircuit , &slope , &values , time , march , RK34, true);
+                }
+            } else if (first_arg == RK34_arg) {
+                if( second_arg == amplifier_arg){
+                    ODE_Solver( amplifierCircuit , &slope , &values , time , march , RK34);
+                } else {
+                    // Simple Circuit is default for RK34 with adaption
+                    ODE_Solver( simpleCircuit , &slope , &values , time , march , RK34);
                 }
             } else {
-                if( (string)argv[6] == "Amplifier"){
+                if( second_arg == amplifier_arg){
                     ODE_Solver( amplifierCircuit , &slope , &values , time , march , FORWARD_EULER);
                 } else {
                     // Simple Circuit is default for Forward Euler
