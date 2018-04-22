@@ -1,5 +1,6 @@
 #include "function_pointer.hpp"
 #include "simpleRC.hpp"
+#include "amplifierRC.hpp"
 
 double true_function( double time ){
     return (((4/1.3)*(exp(0.8*time) - exp(-0.5*time))) + 2*exp(-0.5*time));

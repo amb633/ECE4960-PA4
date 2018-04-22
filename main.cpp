@@ -15,144 +15,145 @@
 #include "phi.hpp"
 
 int main(int argc, const char * argv[]) {
-
-	//cout << fixed;
-    cout << " --------------- Testing Utility Functions --------------- " << endl;
-    TEST();
+//    for( int i = 0; i<=argc; i++){
+//        cout << argv[i] << endl;
+//    }
+    string first_arg = argv[1];
+    string second_arg = argv[3];
+    string test_arg = "TEST";
+    string task3_arg = "TASK3";
+    string task4_arg = "TASK4";
     
-    cout << " --------------- Testing Circuit Functions --------------- " << endl;
-    if ( test_current_generator() )
-    	cout << " current generator is working " << endl << endl;
-    else cout << " current generator is not working " << endl << endl;
+    void (*exp_fcn)( vector<double>* , vector<double>* , double , double ) = exponential_function;
+    void (*simpleCircuit)( vector<double>* , vector<double>* , double , double) = simple_RC_circuit;
+    void (*amplifierCircuit)( vector<double>* , vector<double>* , double , double ) = amplifier_circuit;
+    
+    if(first_arg == test_arg){
+        //cout << fixed;
+        cout << " --------------- Testing Utility Functions --------------- " << endl;
+        TEST();
+        
+        cout << " --------------- Testing Circuit Functions --------------- " << endl;
+        if ( test_current_generator() )
+            cout << " current generator is working " << endl << endl;
+        else cout << " current generator is not working " << endl << endl;
 
-    if ( test_simple_RC_circuit() )
-        cout << " simple RC circuit function is working " << endl << endl;
-    else cout << " simple RC circuit function is not working " << endl << endl;
+        if ( test_simple_RC_circuit() )
+            cout << " simple RC circuit function is working " << endl << endl;
+        else cout << " simple RC circuit function is not working " << endl << endl;
 
-    if ( test_amplifier_circuit() )
-    	cout << " amplifier circuit function is working " << endl << endl;
-    else cout << " amplifier circuit function is not working " << endl << endl;
+        if ( test_amplifier_circuit() )
+            cout << " amplifier circuit function is working " << endl << endl;
+        else cout << " amplifier circuit function is not working " << endl << endl;
 
-    cout << " --------------- Testing Parent Phi function --------------- " << endl;
-    test_phi_function();
-    cout << endl << endl;
+        cout << endl << endl;
+        
+    } else if( first_arg == task3_arg){
 
     //
     // PA 4 Tasks 3
     //
     
-    cout << fixed;
-    void (*exp_fcn)( vector<double>* , vector<double>* , double , double ) = exponential_function;
-    
-    vector<double> slope , values;
-    
-    vector<double> initial;
-    initial = {2.0};
-    double time = 0.0;
-    double march = 1.0;
-    double n_steps = 5;
-    
-    cout << "time:      actual:      RK34       k1          k2          k3          k4:" << endl;
-    cout << "---------------------------------------------------------------------------" << endl;
-    
-    for ( int i = 0 ; i < n_steps ; i++ ){
-        cout << time << "   ";
-        double ground_truth = true_function(time);
-        cout << ground_truth << "   ";
+        cout << fixed;
         
-        vector<double> new_values;
+        vector<double> slope , values;
         
-        if( i < 1){
-            new_values = initial;
-        } else {
-            
-            double time_prev = time - march;
-            vector<double> k1, k2, k3, k4, Err;
-//            forward_euler( exp_fcn , &slope , &values , time_prev , march );
-            RK34_function(exp_fcn, &slope, &values, time_prev, march, &k1, &k2, &k3, &k4);
-            E_RK34_function(&Err, march, &k1, &k2, &k3, &k4 );
-            vector<double> slope_h;
-            scaleVector(march, &slope, &slope_h);
-            add_vectors(&values, &slope_h, &new_values);
-            print_full_vec(&new_values);
-            print_full_vec(&k1);
-            print_full_vec(&k2);
-            print_full_vec(&k3);
-            print_full_vec(&k4);
+        vector<double> initial;
+        initial = {2.0};
+        double time = 0.0;
+        double march = 1.0;
+        double end_time = 4;
+        values = initial;
+        
+        if( second_arg == "RK34" ){ cout << "time:      actual:      RK34:  " << endl; };
+        if( second_arg == "Forward" ){ cout << "time:      actual:      Forward:  " << endl; };
+        cout << "---------------------------------------------------------------------------" << endl;
+        
+        while(time <= end_time){
+            cout << time << "   ";
+            double ground_truth = true_function(time);
+            cout << ground_truth << "   ";
+            if( second_arg == "RK34" ){
+                if( (string)argv[4] == "Adaptation" ){
+                    ODE_Solver( exp_fcn , &slope , &values , time , march , RK34, true);
+                } else {
+                    ODE_Solver( exp_fcn , &slope , &values , time , march , RK34);
+                }
+            } else {
+                //Forward Euler is default
+                ODE_Solver( exp_fcn , &slope , &values , time , march , FORWARD_EULER);
+            }
         }
+        cout << endl;
+    } else if( first_arg == task4_arg ){
+    
+        //
+        // PA 4 Task 4
+        //
         
-        values = new_values;
-        slope.erase(slope.begin(), slope.end());
-        double new_time = time + march;
-        time = new_time;
         cout << endl;
-    }
-    
-    //
-    // PA 4 Task 4
-    //
-    
-    cout << endl;
 
-    cout << fixed;
-    cout.precision(10);
-    void (*simpleCircuit)( vector<double>* , vector<double>* , double , double) = simple_RC_circuit;
+        cout << fixed;
+        cout.precision(10);
+        
+        //reset vectors for next task
+        vector<double> slope, values, initial;
+        
+        //re-intializing values for this task
+        double time = 0.0;
+        double march = 1e-9;
+        //    initial = {2.0};
+        initial = {0.0 , 0.0};
+        values = initial;
+        double end_time = 100e-9;
 
-    //reset vectors for next task
-    values.erase(values.begin());
-    initial.erase(initial.begin());
-    
-    //re-intializing values for this task
-    time = 0.0;
-    march = 1e-9;
-    //    initial = {2.0};
-    initial = {0.0 , 0.0};
-    double end_time = 100e-9;
+        if( second_arg == "RK34" ){
+            if((string)argv[4] == "Adaptation"){
+                cout << "RK34 Adaptation Method: " << endl;
+                
+            } else{
+                cout << "RK34 Method: " << endl;
+            }
+        };
+        if( second_arg == "Forward" ){ cout << "Forward Euler Method: " << endl; };
+        cout << "time:     V1:        V2:     " << endl;
+        cout << "--------------------------------------" << endl;
 
-    cout << "time1:     RK34 Method->    V1:        V2:     " << endl;
-    cout << "-------------------------------------------------------------------------" << endl;
-
-    while(time <= end_time){
-        cout << time << "   ";
-//        vector<double> ground_truth;
-//        true_function(&ground_truth, &time);
-//        print_full_vec(&ground_truth);
-
-        vector<double> new_values;
-        cout << "                   ";
-
-        if( time == 0.0){
-            new_values = initial;
-            print_full_vec(&initial);
-        } else {
-            double time_prev = time - march;
-            vector<double> k1, k2, k3, k4;
-            forward_euler( simpleCircuit , &slope , &values , time_prev , march );
+        while(time <= end_time){
+            cout << time << "   ";
             
-//            RK34_function(simpleCircuit, &slope, &values, time_prev, march, &k1, &k2, &k3, &k4);
-            vector<double> slope_h;
-            scaleVector(march, &slope, &slope_h);
-            add_vectors(&values, &slope_h, &new_values);
-//            print_full_vec(&slope);
-            print_full_vec(&new_values);
-//            cout << endl << "This is the results for k in this iteration: " << endl;
-//            print_full_vec(&k1); cout << endl;
-//            print_full_vec(&k2); cout << endl;
-//            print_full_vec(&k3); cout << endl;
-//            print_full_vec(&k4); cout << endl;
-//            vector<double> Err;
-//            E_RK34_function(&Err, march, &k1, &k2, &k3, &k4);
-//            double h_i_1 = new_h_RK34(march, &new_values, &Err, 1e-7);
-//            march = h_i_1;
+            if( second_arg == "RK34" ){
+                if( (string)argv[4] == "Adaptation"){
+                    if( (string)argv[6] == "Amplifier"){
+                        ODE_Solver( amplifierCircuit , &slope , &values , time , march , RK34, true);
+                    } else {
+                        // Simple Circuit is default for RK34 with adaption
+                        ODE_Solver( simpleCircuit , &slope , &values , time , march , RK34, true);
+                    }
+                } else {
+                    //RK34 without adaption is the default
+                    if( (string)argv[5] == "Amplifier"){
+                        ODE_Solver( amplifierCircuit , &slope , &values , time , march , RK34);
+                    } else {
+                        //Simple Circuit is default fr RK34 without adaption
+                        ODE_Solver( simpleCircuit , &slope , &values , time , march , RK34);
+                    }
+                }
+            } else {
+                if( (string)argv[6] == "Amplifier"){
+                    ODE_Solver( amplifierCircuit , &slope , &values , time , march , FORWARD_EULER);
+                } else {
+                    // Simple Circuit is default for Forward Euler
+                    ODE_Solver( simpleCircuit , &slope , &values , time , march , FORWARD_EULER);
+                }
+                
+            }
+            
         }
-        values = new_values;
-        slope.erase(slope.begin(), slope.end());
-        double new_time = time + march;
-        time = new_time;
+
+
         cout << endl;
+        cout << argc << endl;
     }
-
-
-    cout << endl;
 
 }
