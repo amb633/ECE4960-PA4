@@ -19,7 +19,7 @@ int main(int argc, const char * argv[]) {
 //    for( int i = 0; i<=argc; i++){
 //        cout << argv[i] << endl;
 //    }
-    string first_arg = "TEST";//argv[1];
+    string first_arg = argv[1];
     string second_arg = argv[3];
     string test_arg = "TEST";
     string exp_arg = "Exponential";
