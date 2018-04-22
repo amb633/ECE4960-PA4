@@ -1,22 +1,32 @@
 #include "amplifierRC.hpp"
 
 void amplifier_circuit( vector<double>* phi , vector<double>* values , double time , double march ){
+	// function to generate the instantaneous slope at the given time interval
+	// based on figure 5a in the handout
+
+	// declare given parameters of the circuit
 	double Is , kappa , Vth , Vdd , R , C;
 	Vdd = 5.0;
 	R = 10.0e3;
 	C = 1.0e-12;
 
+	// obtain the current input at the present time
 	double current_term = ( generate_current_input( time )) / C;
+	// calculate the slope of V1
 	double phi_1 = ( (-(*values)[0])/(R*C) ) + current_term;
+	// calculate the slope of V2
 	double ID = calculate_ID( (*values)[0] , (*values)[1] );
 	double phi_2 = (-ID / C ) - (((*values)[1])/(R*C)) + (Vdd/(R*C));
 
+	// push values into the return vector
 	(*phi).push_back(phi_1);
 	(*phi).push_back(phi_2);
 }
 
 double calculate_ID( double vgs , double vds ){
-    // function to calculate the modelled ids values
+    // function to calculate the ID,EKF current values
+    // based on equation 01 in the handout
+    // code reused from programmin assignment 3
     double kappa = 0.7;
     double vth = 1.0;
     double is = 5.0e-6;
@@ -29,17 +39,20 @@ double calculate_ID( double vgs , double vds ){
 }
 
 bool test_amplifier_circuit(){
+	// function to test if the amplifier function returns the correct values withing a tolerance
+	// "true" values are obtained from the matlab implementation
+	// returns true is all the values are correct
+	// returns false if there are any incorrect values
+
 	bool flag = true;
 	double march = 1e-9;
 	double tolerance = 1.0;
 	
+	// test 1
     vector<double> test_1 , values_1 ;
 	double time_1 = 20.5e-9 ;
 	values_1 = { 1.0 , 1.0 };
 	amplifier_circuit( &test_1 , &values_1 , time_1 , march );
-	cout.precision(15);
-
-	
 	if ( abs( test_1[0] - ( -0.499999999999999e8 ) ) > tolerance
 		|| abs( test_1[1] - ( 3.975977349304090e8 ) ) > tolerance ){
 		flag = false;
@@ -47,6 +60,8 @@ bool test_amplifier_circuit(){
 		cout << endl;
 	}
 
+
+	// test 2
 	vector<double> test_2 , values_2 ; 
 	double time_2 = 64.5e-9 ;
 	values_2 = { 2.0 , 4.0 };
@@ -58,6 +73,7 @@ bool test_amplifier_circuit(){
 		cout << endl;
 	}
 
+	// test 3
 	vector<double> test_3 , values_3 ;
 	double time_3 = 76.3e-9;
 	values_3 = { 3.0 , 5.0 };
@@ -69,6 +85,7 @@ bool test_amplifier_circuit(){
 		cout << endl;
 	}
 
+	// return error flag
 	return flag;
 
 }

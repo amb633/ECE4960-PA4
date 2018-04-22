@@ -1,6 +1,10 @@
 #include "simpleRC.hpp"
 
 void simple_RC_circuit( vector<double>* phi , vector<double>* values , double time , double march ){
+	// function to generate the instantaneous slope at a given time interval
+	// based on figure 3 in the handout
+
+	// declare given parameters of the circuit
 	double R1 , R2 , R3 , C1 , C2 , cp11 , cp12 , cp21 , cp22 ;
 	R1 = 10.0e3;
 	R2 = 10.0e3;
@@ -14,25 +18,25 @@ void simple_RC_circuit( vector<double>* phi , vector<double>* values , double ti
 	cp21 = 1.0/(C2*R2);
 	cp22 = -( (1.0/(C2*R2)) + (1.0/(C2*R3)) );
 
+	// find the homogenous solution
 	vector<vector<double>> circuit_param = { {cp11 , cp12 } , {cp21 , cp22} };
 	vector<double> temp;
 	vectorProduct( &temp , &circuit_param , values );
-	// cout << endl << endl << endl;
-	// cout << " temp variable : " << endl;
-	// print_full_vec( &temp );
-	// cout << endl << endl << endl;
+
+	// find the current input for the present time
 	double current_term = ( generate_current_input( time )) / C1;
-	// double current_term = ( generate_current_input ( time + march )) / C1;
-	// cout << "current_term : " << current_term << endl;
+
+	// pushback the values into the result vector
 	(*phi).push_back( temp[0] + current_term );
 	(*phi).push_back( temp[1] + 0.0 );
 
 }
 
 double generate_current_input( double time ){
-	
+	// function to generate the current input at the given time
+	// based on figure 6 in the handout
+
 	double gradient = (0.1e-3)/(1.0e-9);
-	//cout << gradient << endl;
 
 	if ( time >= 1.0e-9 && time <= 10e-9 ||
 		time >= 21e-9 && time <= 30e-9 ||
@@ -89,7 +93,10 @@ double generate_current_input( double time ){
 }
 
 bool test_current_generator( ){
-	
+	// function to test if the correct input current values are generated
+	// returns true if all the values are correct
+	// and false if any of the values are incorrect
+
 	bool flag = true;
 
 	if ( generate_current_input( 7.5e-9 ) != 0.1e-3 
@@ -124,22 +131,27 @@ bool test_current_generator( ){
 }
 
 bool test_simple_RC_circuit() {
+	// function to test if the simple RC function returns the correct values withing a tolerance
+	// "true" values are obtained from the matlab implementation
+	// returns true is all the values are correct
+	// returns false if there are any incorrect values
+
 	bool flag = true;
 	double march = 1e-9;
-	
+	double tolerance = 1.0e-5;
+
+	// test 1
     vector<double> test_1 , values_1 ;
 	double time_1 = 20.5e-9 ;
 	values_1 = { 1.0 , 1.0 };
 	simple_RC_circuit( &test_1 , &values_1 , time_1 , march );
-	//cout.precision(15);
-
-	double tolerance = 1.0e-5;
 	if ( abs( test_1[0] - ( -50.0e6 ) ) > tolerance
 		|| abs( test_1[1] - ( -100.0e6 ) ) > tolerance ){
 		flag = false;
-		//print_full_vec( &test_1 );
+		print_full_vec( &test_1 );
 	}
 
+	// test 2
 	vector<double> test_2 , values_2 ; 
 	double time_2 = 64.5e-9 ;
 	values_2 = { 2.0 , 4.0 };
@@ -150,6 +162,7 @@ bool test_simple_RC_circuit() {
 		print_full_vec( &test_2 );
 	}
 
+	// test 3
 	vector<double> test_3 , values_3 ;
 	double time_3 = 76.3e-9;
 	values_3 = { 3.0 , 5.0 };
@@ -160,6 +173,7 @@ bool test_simple_RC_circuit() {
 		print_full_vec( &test_3 );
 	}
 
+	// return error flag
 	return flag;
 
 }
