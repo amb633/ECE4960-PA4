@@ -91,7 +91,7 @@ int main(int argc, const char * argv[]) {
     } else if( (second_arg == simple_arg) || (second_arg == amplifier_arg) ){
     
         //
-        // PA 4 Task 4
+        // PA 4 Task 4 or 5
         //
         
         cout << endl;
@@ -105,6 +105,13 @@ int main(int argc, const char * argv[]) {
         //re-intializing values for this task
         double time = 0.0;
         double march = 1e-9;
+        
+        if(argc > 4){
+            if((string)argv[5] == "0.2"){
+                march = 0.2e-9;
+            };
+            
+        }
         //    initial = {2.0};
         initial = {0.0 , 0.0};
         values = initial;
@@ -153,7 +160,7 @@ int main(int argc, const char * argv[]) {
 
 
         cout << endl;
-        cout << argc << endl;
+//        cout << dummy_march << endl;
     }
 
 }
