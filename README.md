@@ -12,6 +12,7 @@ The program is simple to use for user's looking to run individual runs to genera
 
 - **Argument#1**: Pick the ODE Solver method to use
     - `ForwardEuler`, `RK34`, `RK34A`
+    - `TEST` --> sending the argument only will run the test mode
 - **Argument#2**: Pick the system to solve
     - `Exponential`, `Simple`, `Amplifier`
 - **Argument#3**: Pick the size of the time step

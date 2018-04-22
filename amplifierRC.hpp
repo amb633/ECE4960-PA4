@@ -8,5 +8,3 @@ using namespace std;
 double calculate_ID( double vgs , double vds );
 void amplifier_circuit( vector<double>* phi , vector<double>* values , double time , double march );
 
-// test functions
-bool test_amplifier_circuit();
