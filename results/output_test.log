@@ -1,0 +1,22 @@
+ --------------- Testing Utility Functions --------------- 
+Testing the vector add function: 
+
+{1, 1, 1, 1} + {2, 2, 2, 2} = 3   3   3   3   vector of 1s plus a vector of 2s is eqaul to vector of 3s: 1
+
+Testing the vector scale function: 
+
+{3, 3, 3, 3} * 5 = 15   15   15   15   vector of 3s scaled by 5 is eqaul to vector of 15s: 1
+
+Testing the vector multiplication function: 
+
+{2, 2, 2, 2} * {15, 15, 15, 15} = 30   30   30   30   vector of 2s multipled by vector of 15s is eqaul to vector of 30s: 1
+
+ --------------- Testing Circuit Functions --------------- 
+ current generator is working 
+
+ simple RC circuit function is working 
+
+ amplifier circuit function is working 
+
+
+
